@@ -69,11 +69,11 @@ function split()
 #help info
 if [ $# -lt 1 ]
 then
-  echo "Usage: ./splitReads_paried.sh inputDir outputDir  integer (1-99, default 10)"
+  echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)"
   exit 1
 elif [ $1 == --help -o $1 == -h ]
 then
-  echo "Usage: ./splitReads_paried.sh inputDir outputDir  integer (1-99, default 10)"
+  echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)"
   exit 1
 fi
 
@@ -82,26 +82,26 @@ fi
 if [ ! -d $inputDir ]
 then
     echo "[ERROR]" $inputDir " is not a directory"
-    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    echo "Usage: ./splitReads_single.sh inputDir outputDir integer (1-99, default 10)"
     exit 1
 fi
 
 if [ ! -d $outputDir ]
 then
     echo "[ERROR]" $outputDir " is not a directory"
-    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    echo "Usage: ./splitReads_single.sh inputDir outputDir integer (1-99, default 10)"
     exit 1
 fi
 
 if ! [[ $test_percentage =~ ^[0-9]+$ ]]
 then
     echo "[ERROR] Percentage should be 1-99 (integer)"
-    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    echo "Usage: ./splitReads_single.sh inputDir outputDir integer (1-99, default 10)"
     exit 1
 elif [ $test_percentage -ge 100 -o $test_percentage -le 0 ]
 then
     echo "[ERROR] Percentage should be 1-99 (integer)"
-    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    echo "Usage: ./splitReads_single.sh inputDir outputDir integer (1-99, default 10)"
     exit 1
 fi
 
