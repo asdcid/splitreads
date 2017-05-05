@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #############################################################
-#dir contains R1 and R2, in fastq.gz format (the end of file must be ".fastq.gz", if not, change the for loop)
-inputDir='.'
-outputDir='separate'
-test_percentage=25 #percentage of data to reserve as test data (must be int!!!)
+#dir contains R1 and R2, in fastq.gz format (the end of file must be ".fastq.gz" or ".fq.gz")
+inputDir=$1
+outputDir=$2
+test_percentage=${3:-10} #percentage of data to reserve as test data (must be integer!!!)
 #############################################################
 
 #if this script has every error, exit
@@ -27,15 +27,15 @@ function check_R1R2_seqName()
         echo "[ERROR] Names in R1/R2 are not the same"
         exit 1
     fi
-    rm $R1File.checkName $R2File.checkName
 
-    # first check that you have the same number of lines in both files
     n1=$(wc -l < $R1File.checkName)
     n2=$(wc -l < $R2File.checkName)
     echo "You have "$n1" forward reads"
     echo "You have "$n2" reverse reads"
 
-    # get the number of reads that correspond to the test_percentage 
+    rm $R1File.checkName $R2File.checkName
+
+    # get the number of reads that correspond to the test_percentage
     nTest=$[$n1 * $percentage / 100]
     nTrain=$[$n1 - $nTest]
     echo "Making test file from "$nTest" reads"
@@ -49,6 +49,7 @@ function split()
 {
     FQ1=$1
     FQ2=$2
+    # The names of the test/train subsets you wish to create
     FQ1train=$3
     FQ1test=$4
     FQ2train=$5
@@ -56,7 +57,7 @@ function split()
     nTrain=$7
     nTest=$8
 
-    # paste the two FASTQ such that the 
+    # paste the two FASTQ such that the
     # header, seqs, seps, and quals occur "next" to one another
     paste $FQ1 $FQ2 | \
     # "linearize" the two mates into a single record.  Add a random number to the front of each line
@@ -89,15 +90,66 @@ function split()
     rm testData.pasted.txt trainData.pasted.txt pasted.txt
 }
 
+#help info
+if [ $# -lt 1 ]
+then
+  echo "Usage: ./splitReads_paried.sh inputDir outputDir  integer (1-99, default 10)"
+  exit 1
+elif [ $1 == --help -o $1 == -h ]
+then
+  echo "Usage: ./splitReads_paried.sh inputDir outputDir  integer (1-99, default 10)"
+  exit 1
+fi
 
 
-for R1gz in $inputDir/*R1*fastq.gz
+#check argument
+if [ ! -d $inputDir ]
+then
+    echo "[ERROR]" $inputDir " is not a directory"
+    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    exit 1
+fi
+
+if [ ! -d $outputDir ]
+then
+    echo "[ERROR]" $outputDir " is not a directory"
+    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    exit 1
+fi
+
+if ! [[ $test_percentage =~ ^[0-9]+$ ]]
+then
+    echo "[ERROR] Percentage should be 1-99 (integer)"
+    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    exit 1
+elif [ $test_percentage -ge 100 -o $test_percentage -le 0 ]
+then
+    echo "[ERROR] Percentage should be 1-99 (integer)"
+    echo "Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)"
+    exit 1
+fi
+
+
+
+##begin
+
+
+for R1gz in $inputDir/*R1*
 do
     echo 'Processing' $R1gz
-
-    R2gz=${R1gz//"R1"/"R2"}
-    outputR1=$outputDir/$(basename $R1gz ".fastq.gz")
-    outputR2=$outputDir/$(basename $R2gz ".fastq.gz")
+    if [[ $R1gz == *.fastq.gz ]]
+    then
+        extension=".fastq.gz"
+    elif [[ $R1gz == *.fq.gz ]]
+    then
+        extension=".fq.gz"
+    else
+        echo "[ERROR] The file is neither in fastq.gz or fq.gz format"
+        exit 1
+    fi
+    R2gz=${R1gz/"R1"/"R2"}
+    outputR1=$outputDir/$(basename $R1gz $extension)
+    outputR2=$outputDir/$(basename $R2gz $extension)
 
     #unzip fq for convenience
     zcat $R1gz > $outputR1
