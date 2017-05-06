@@ -69,11 +69,11 @@ function split()
 #help info
 if [ $# -lt 1 ]
 then
-  echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)" 
+  echo "Usage: ./splitReads_single.sh inputFile outputTrainFile outputTestFile  integer (1-99, default 10)" 
   exit 1
 elif [ $1 == --help -o $1 == -h ]
 then
-  echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)" 
+  echo "Usage: ./splitReads_single.sh inputFile outputTrainFile outputTestFile  integer (1-99, default 10)" 
   exit 1
 fi
 
@@ -88,12 +88,12 @@ fi
 if ! [[ $test_percentage =~ ^[0-9]+$ ]]
 then
     echo "[ERROR] Percentage should be 1-99 (integer)"
-    echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)" 
+    echo "Usage: ./splitReads_single.sh inputFile outputTrainFile outputTestFile  integer (1-99, default 10)" 
     exit 1
 elif [ $test_percentage -ge 100 -o $test_percentage -le 0 ]
 then
     echo "[ERROR] Percentage should be 1-99 (integer)"
-    echo "Usage: ./splitReads_single.sh inputDir outputDir  integer (1-99, default 10)" 
+    echo "Usage: ./splitReads_single.sh inputFile outputTrainFile outputTestFile  integer (1-99, default 10)" 
     exit 1
 fi
 
