@@ -80,15 +80,15 @@ function split()
     awk -v FQ1test="$FQ1test" \
         -v FQ2test="$FQ2test" \
         '{OFS="\n"; \
-        print $2,$3,$6,$8 >> FQ1test; \
-        print $4,$5,$7,$9 >> FQ2test}' \
+        print $2,$4,$6,$8 >> FQ1test; \
+        print $3,$5,$7,$9 >> FQ2test}' \
         testData.pasted.txt
 
     awk -v FQ1train="$FQ1train" \
         -v FQ2train="$FQ2train" \
         '{OFS="\n"; \
-        print $2" "$3,$6,$8,$10 >> FQ1train; \
-        print $4" "$5,$7,$9,$11 >> FQ2train}' \
+        print $2,$4,$6,$8 >> FQ1train; \
+        print $3,$5,$7,$9 >> FQ2train}' \
         trainData.pasted.txt
 
     #clean
