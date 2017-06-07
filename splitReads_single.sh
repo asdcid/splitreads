@@ -54,12 +54,12 @@ function split()
     # unmerge the reads
     awk -v FQ1test="$FQ1test" \
         '{OFS="\n"; \
-        print $2" "$3,$4,$5,$6 >> FQ1test}' \
+        print $2,$3,$4,$5 >> FQ1test}' \
         testData.pasted.txt
 
     awk -v FQ1train="$FQ1train" \
         '{OFS="\n"; \
-        print $2" "$3,$4,$5,$6 >> FQ1train}' \
+        print $2,$3,$4,$5 >> FQ1train}' \
         trainData.pasted.txt
 
     #clean
