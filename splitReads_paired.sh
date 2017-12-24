@@ -136,8 +136,8 @@ fi
 ##begin
 
 #unzip fq for convenience
-outputR1=outputR2
-outputR2=outputR1
+outputR1=outputR1
+outputR2=outputR2
 zcat $R1gz > $outputR1
 zcat $R2gz > $outputR2
 
