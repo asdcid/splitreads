@@ -138,15 +138,15 @@ fi
 #unzip fq for convenience
 outputR1=outputR1
 outputR2=outputR2
-zcat $R1gz > $outputR1
-zcat $R2gz > $outputR2
+pigz -dc $R1gz > $outputR1
+pigz -dc $R2gz > $outputR2
 
 check_R1R2_seqName $outputR1 $outputR2 $test_percentage
 split $outputR1 $outputR2 $outputR1_train_fastq $outputR1_test_fastq $outputR2_train_fastq $outputR2_test_fastq $nTrain $nTest
 
-gzip $outputR1_train_fastq
-gzip $outputR1_test_fastq
-gzip $outputR2_train_fastq
-gzip $outputR2_test_fastq
+pigz $outputR1_train_fastq
+pigz $outputR1_test_fastq
+pigz $outputR2_train_fastq
+pigz $outputR2_test_fastq
 
 rm $outputR1 $outputR2
