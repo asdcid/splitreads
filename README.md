@@ -17,3 +17,5 @@ e.g \>readname 123 aaa  (do not work)
 ```
           sort -k1,1 -T temp > pasted.txt
 ```
+
+3. Required pigz
