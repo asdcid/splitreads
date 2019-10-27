@@ -9,7 +9,9 @@ It's really just a reworking of some answers on biostars here: https://www.biost
 NOTE: 
 1. The script will only keep the first domain of the read name.
 
-e.g \>readname 123 aaa
+e.g
+
+\>readname 123 aaa
 
 after `splitread`
 
