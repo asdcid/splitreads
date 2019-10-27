@@ -43,7 +43,7 @@ function split()
     # "linearize" the two mates into a single record.  Add a random number to the front of each line
     awk 'BEGIN{srand()}; {OFS="\t"; \
            getline seqs; getline sep; getline quals; \
-           print rand(),$0,seqs,sep,quals}' $FQ1 | \
+           print rand(),$1,seqs,sep,quals}' $FQ1 | \
     # sort by the random number
            sort -k1,1 > pasted.txt
 
