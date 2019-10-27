@@ -10,6 +10,7 @@ outputDir=$2
 test_percentage=${3:-10} #percentage of data to reserve as test data (must be integer!!!)
 #############################################################
 
+SOURCE=$(dirname $0})
 
 #help info
 if [ $# -lt 1 ] 
@@ -72,7 +73,7 @@ do
     outputR1=$outputDir/$(basename $R1gz $extension)
     outputR2=$outputDir/$(basename $R2gz $extension)
 
-    ./splitReads_paired.sh $R1gz $R2gz $outputR1.train.fastq $outputR1.test.fastq $outputR2.train.fastq $outputR2.test.fastq $test_percentage
+    bash $SOURCE/splitReads_paired.sh $R1gz $R2gz $outputR1.train.fastq $outputR1.test.fastq $outputR2.train.fastq $outputR2.test.fastq $test_percentage
 
 
 done
