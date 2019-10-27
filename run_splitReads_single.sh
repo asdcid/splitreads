@@ -7,6 +7,7 @@ inputDir=$1
 outputDir=$2
 test_percentage=${3:-10} #percentage of data to reserve as test data (must be integer!!!)
 #############################################################
+SOURCE=$(dirname $0})
 
 #if this script has every error, exit
 set -e
@@ -62,5 +63,5 @@ do
     fi
     
     outputR1=$outputDir/$(basename $R1gz $extension)
-    ./splitReads_single.sh $R1gz $outputR1.train.fastq $outputR1.test.fastq $test_percentage
+    bash $SOURCE/splitReads_single.sh $R1gz $outputR1.train.fastq $outputR1.test.fastq $test_percentage
 done
