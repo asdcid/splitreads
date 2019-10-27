@@ -7,11 +7,13 @@ Usage: ./splitReads_paried.sh inputDir outputDir integer (1-99, default 10)
 It's really just a reworking of some answers on biostars here: https://www.biostars.org/p/6544/
 
 NOTE: 
-1. The script does not work if the header has more than one domain.
+1. The script will only keep the first domain of the read name.
 
-e.g \>readname 123 aaa  (do not work)
+e.g \>readname 123 aaa
 
-   \>readname          (work)
+after `splitread`
+
+   \>readname
     
 2. For split large fastq file, using -T dir\_to\_sore\_tmp\_data in "sort" step (need to be manually change in the script).
 ```
