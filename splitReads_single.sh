@@ -40,12 +40,14 @@ function split()
     nTrain=$4
     nTest=$5
 
+    mkdir $FQ1.tmp
+    
     # "linearize" the two mates into a single record.  Add a random number to the front of each line
     awk 'BEGIN{srand()}; {OFS="\t"; \
            getline seqs; getline sep; getline quals; \
            print rand(),$1,seqs,sep,quals}' $FQ1 | \
     # sort by the random number
-           sort -k1,1 > pasted.txt
+           sort -k1,1 -T $FQ1.tmp > pasted.txt
 
     # split the merged reads
     head -n $nTest pasted.txt > testData.pasted.txt
@@ -64,6 +66,7 @@ function split()
 
     #clean
     rm testData.pasted.txt trainData.pasted.txt pasted.txt
+    rm -r $FQ1.tmp
 }
 
 #help info
