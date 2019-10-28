@@ -17,9 +17,5 @@ after `splitread`
 
    \>readname
     
-2. For split large fastq file, using -T dir\_to\_sore\_tmp\_data in "sort" step (need to be manually change in the script).
-```
-          sort -k1,1 -T temp > pasted.txt
-```
 
-3. Required pigz
+2. Required pigz
