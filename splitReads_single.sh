@@ -112,7 +112,7 @@ stat $outputR1 $test_percentage
 
 split $outputR1 $outputR1_train_fastq $outputR1_test_fastq $nTrain $nTest
 
-gzip $outputR1_train_fastq
-gzip $outputR1_test_fastq
+pigz $outputR1_train_fastq
+pigz $outputR1_test_fastq
 
 rm $outputR1 
